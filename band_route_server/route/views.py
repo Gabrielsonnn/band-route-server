@@ -1,39 +1,80 @@
+import rest_framework.exceptions
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponse
 import json
 from . import HeldKarpAlgorithm, DataConversion, NearestNeighborSolution
 
 # third party imports
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import jsonschema
 
 
 class OptimalRoute(APIView):
     def get(self, request, *args, **kwargs):
+
         # Get input from user
-        points = request.query_params['points']
+        try:
+            points = json.loads(request.query_params['points'])
+        except Exception as e:
+            return Response(data=str(e), status=400, exception=True)
 
-        # Convert inputted data into a data matrix, expecting
-        distances = DataConversion.create_DM(points)
+        # Validate JSON, must be in this format [{"x": number, "y": number}, {"x": number, "y": number}]
+        try:
+            DataConversion.JSON_validation(points)
+        except jsonschema.exceptions.ValidationError as e:
+            return Response(data=str(e), status=400, exception=True)
 
-        # input data matrix into Held-Karp Algorithm
-        distance, path = HeldKarpAlgorithm.held_karp(distances)
+        # Use inputted json data to find distance and path
+        try:
+            # Convert inputted data into a data matrix
+            distances = DataConversion.create_DM(points)
 
-        # Return JSON
+            # Get distance and path using Held-Karp Algorithm.
+            distance, path = HeldKarpAlgorithm.held_karp(distances)
+        except Exception as e:
+            return Response(data=str(e), status=500, exception=True)
+
+        # Create JSON payload to return data.
+        data = {
+            'distance': distance,
+            'path': path
+        }
+
+        # Return payload
         return Response(data)
+
 
 class EfficientRoute(APIView):
     def get(self, request, *args, **kwargs):
+
         # Get input from user
+        try:
+            points = json.loads(request.query_params['points'])
+        except Exception as e:
+            return Response(data=str(e), status=400, exception=True)
 
-        points = json.loads(request.query_params['points'])
+        # Validate JSON, must be in this format [{"x": number, "y": number}, {"x": number, "y": number}]
+        try:
+            DataConversion.JSON_validation(points)
+        except jsonschema.exceptions.ValidationError as e:
+            return Response(data=str(e), status=400, exception=True)
 
-        # Convert inputted data into a data matrix, expecting
-        distances = DataConversion.create_DM(points)
+        # Use inputted json data to find distance and path
+        try:
+            # Convert inputted data into a data matrix
+            distances = DataConversion.create_DM(points)
 
-        # Get path using nearest neighbor solution.
-        distance, path = NearestNeighborSolution.nearest_neighbor(distances)
+            # Get distance and path using nearest neighbor solution.
+            distance, path = NearestNeighborSolution.nearest_neighbor(distances)
+        except Exception as e:
+            return Response(data=str(e), status=500, exception=True)
 
-        # Return JSON
+        # Create JSON payload to return data.
+        data = {
+            'distance': distance,
+            'path': path
+        }
+
+        # Return payload
         return Response(data)
-

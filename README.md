@@ -30,4 +30,5 @@ Here are some sample sets of data to use:
 
 - django
 - djangorestframework
+- jsonschema
 ### Fill in comments, external tool usage, and time tracking

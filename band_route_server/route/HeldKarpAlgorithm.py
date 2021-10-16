@@ -1,6 +1,4 @@
 import itertools
-import random
-import sys
 
 # Original Solution: https://github.com/CarlEkerot/held-karp
 
@@ -65,42 +63,3 @@ def held_karp(dists):
     path.append(0)
 
     return opt, list(reversed(path))
-
-
-def generate_distances(n):
-    dists = [[0] * n for i in range(n)]
-    for i in range(n):
-        for j in range(i+1, n):
-            dists[i][j] = dists[j][i] = random.randint(1, 99)
-
-    return dists
-
-
-def read_distances(filename):
-    dists = []
-    with open(filename, 'rb') as f:
-        for line in f:
-            # Skip comments
-            if line[0] == '#':
-                continue
-
-            dists.append(map(int, map(str.strip, line.split(','))))
-
-    return dists
-
-
-if __name__ == '__main__':
-    arg = sys.argv[1]
-
-    if arg.endswith('.csv'):
-        dists = read_distances(arg)
-    else:
-        dists = generate_distances(int(arg))
-
-    # Pretty-print the distance matrix
-    for row in dists:
-        print(''.join([str(n).rjust(3, ' ') for n in row]))
-
-    print('')
-
-    print(held_karp(dists))
