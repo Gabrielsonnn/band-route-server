@@ -29,5 +29,5 @@ Here are some sample sets of data to use:
 ###External Libraries:
 
 - django
-
+- djangorestframework
 ### Fill in comments, external tool usage, and time tracking

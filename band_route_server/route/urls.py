@@ -1,6 +1,8 @@
-from django.urls import path
-from .views import get_route
+from django.urls import path, include
+from .views import *
 
 urlpatterns = [
-    path('', get_route, name='get_route')
+    path('api-auth/', include('rest_framework.urls')),
+    path('optimal/', OptimalRoute.as_view(), name='get_optimal_route'),
+    path('efficient/', EfficientRoute.as_view(), name='get_efficient_route')
 ]
