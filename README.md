@@ -26,4 +26,8 @@ Here are some sample sets of data to use:
 
 # Candidate Notes:
 
+###External Libraries:
+
+- django
+
 ### Fill in comments, external tool usage, and time tracking
