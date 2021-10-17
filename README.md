@@ -75,8 +75,8 @@ The JSON that is passed in through the URL should be formatted like the below ex
 Once the server is finished processing the GET request it will return the data using a JSON payload of the format:
 ```json
 {
-  "distance": [float],
-  "path": [array_of_ints]
+  "distance": float,
+  "path": array_of_ints
 }
 ```
 
