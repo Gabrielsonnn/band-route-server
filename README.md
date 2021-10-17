@@ -26,9 +26,60 @@ Here are some sample sets of data to use:
 
 # Candidate Notes:
 
+### Implementation:
+
+I used Django as the backend API for the server mainly for two reasons. One, I am the most familiar with Django, and 
+two, I think it is by far one of the best libraries for creating a backend server with python. Along with using django,
+I created a REST framework as well.
+
+To solve the solution to the Traveling Salesman Problem (TSP) I used two algorithms. The first is the nearest neighbor 
+solution, which is a naive solution that does not always give the most optimal path, but it is a O(N) algorithm thus it 
+is quite fast. The second solution is the Held-Karp Algorithm, which returns the most optimal path to the problem. The 
+largest downside is that this algorithm has a time complexity of O(2^n n^2). So once hitting about 20 nodes, this 
+algorithm begins to slow down quite a bit and uses a lot of memory (Once hitting 20 nodes, I can no longer run this 
+solution on my computer).
+
+
 ###External Libraries:
 
-- django
-- djangorestframework
-- jsonschema
-### Fill in comments, external tool usage, and time tracking
+- asgiref==3.4.1
+- attrs==21.2.0
+- Django==3.2.8
+- djangorestframework==3.12.4
+- jsonschema==4.1.0
+- pyrsistent==0.18.0
+- pytz==2021.3
+- sqlparse==0.4.2
+
+### Usage
+
+Once installing all the above listed external libraries run the below command using the created virtual environment from
+the directory that contains manage.py to start the webserver.
+
+```console
+python manage.py runserver
+```
+
+This should launch the webserver on the local host (http://127.0.0.1:8000/).
+
+To access the two API solutions use:
+- http://127.0.0.1:8000/efficient?points=<json>
+- http://127.0.0.1:8000/optimal?points=<json>
+
+The JSON that is passed in through the URL should be formatted like the below examples:
+```json
+- [{"x": 2, "y": 4}, {"x": 8, "y": 1}]
+- [{"x": 522, "y": 223}, {"x": 548.25, "y": 482.4}]
+```
+
+Once the server is finished processing the GET request it will return the data using a JSON payload of the format:
+```json
+{
+  "distance": <float>,
+  "path": <array_of_ints>
+}
+```
+
+### Time
+
+Building the solutions, creating the server, and creating the API's took about 3-4 hours.

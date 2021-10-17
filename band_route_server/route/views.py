@@ -1,16 +1,20 @@
-import rest_framework.exceptions
-from django.shortcuts import render
-from django.http import HttpResponse
 import json
+
+# python file imports
 from . import HeldKarpAlgorithm, DataConversion, NearestNeighborSolution
 
 # third party imports
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 import jsonschema
 
 
 class OptimalRoute(APIView):
+
+    # Set default renderer
+    renderer_classes = [JSONRenderer]
+
     def get(self, request, *args, **kwargs):
 
         # Get input from user
@@ -46,6 +50,10 @@ class OptimalRoute(APIView):
 
 
 class EfficientRoute(APIView):
+
+    # Set default renderer
+    renderer_classes = [JSONRenderer]
+
     def get(self, request, *args, **kwargs):
 
         # Get input from user

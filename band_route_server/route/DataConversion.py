@@ -1,13 +1,10 @@
 import math
-import json
-import jsonschema
 from jsonschema import validate
 
 
 def create_DM(points):
     """
     Converts list of x,y pairs into a data matrix showing distance.
-
     :param points: list of x,y pairs
     :return: Data Matrix
     """
@@ -30,8 +27,9 @@ def create_DM(points):
 
 def JSON_validation(my_json):
     """
+    This function tests to see if json is of the valid format, if it is improper, the validate() function will throw an
+    error which will be caught in views.py
     :param json: inputted json to validate
-    :return: boolean. True: Json is valid, False: json is invalid.
     """
     # Create schema for expected json
     points_schema = {

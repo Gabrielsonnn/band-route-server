@@ -1,6 +1,6 @@
 def nearest_neighbor(dists):
     """
-
+    A naive solution the TSP
     :param dists: Data matrix containing distance between two nodes.
     :return: A tuple, (cost, path taken).
     """
@@ -34,8 +34,3 @@ def nearest_neighbor(dists):
 
     # Return tuple containing total distance and path taken.
     return total_distance, path
-
-
-
-
-
