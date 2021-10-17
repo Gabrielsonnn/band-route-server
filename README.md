@@ -63,8 +63,8 @@ python manage.py runserver
 This should launch the webserver on the local host (http://127.0.0.1:8000/).
 
 To access the two API solutions use:
-- http://127.0.0.1:8000/efficient?points=<json>
-- http://127.0.0.1:8000/optimal?points=<json>
+- http://127.0.0.1:8000/efficient?points=json
+- http://127.0.0.1:8000/optimal?points=json
 
 The JSON that is passed in through the URL should be formatted like the below examples:
 ```json
@@ -75,8 +75,8 @@ The JSON that is passed in through the URL should be formatted like the below ex
 Once the server is finished processing the GET request it will return the data using a JSON payload of the format:
 ```json
 {
-  "distance": <float>,
-  "path": <array_of_ints>
+  "distance": [float],
+  "path": [array_of_ints]
 }
 ```
 
